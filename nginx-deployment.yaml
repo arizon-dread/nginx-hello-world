@@ -3,22 +3,29 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: nginx-deployment
+    app: nginx
   name: nginx-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-deployment
+      app: nginx
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: nginx-deployment
+        app: nginx
     spec:
       containers:
-      - image: nginx:mainline-alpine
+      - image: arizon-nginx-hello-world:latest
         name: nginx
         resources: {}
+        volumeMounts:
+          - name: nginx-conf
+            mountPath: /etc
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf 
 status: {}
