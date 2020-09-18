@@ -1,8 +1,12 @@
-#user nginx;
-    #worker_processes  3;
-    error_log  stderr;
-    events {
-      worker_connections  1024;
+apiVersion: v1
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes  3;
+    error_log  /dev/stderr;
+    events
+    {
+      worker_connections  10240;
     }
     http {
       log_format  main
@@ -17,14 +21,21 @@
               'useragent:$http_user_agent\t'
               'forwardedfor:$http_x_forwarded_for\t'
               'request_time:$request_time';
-      access_log	stdout main;
+      
+      access_log  /dev/stdout main;
+      
       server {
           listen       8080;
           server_name  _;
+          
           location / {
               root   /var/www/html;
               index  index.html index.htm;
           }
       }
-      #include /etc/nginx/virtualhost/virtualhost.conf;
+      #include    /etc/nginx/virtualhost/virtualhost.conf;
     }
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+  namespace: nginx-hello-world
