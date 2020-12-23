@@ -1,0 +1,23 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx-h-w
+  namespace: nginx-hello-world
+  annotations:
+    kubernetes.io/ingress.class: traefik-internal
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`192.168.68.10`) && (PathPrefix(`/nginx`)
+      kind: Rule
+      services:
+        - name: nginx-traefik
+          kind: Service
+    - match: Host(`minimolnet`) && (PathPrefix(`/nginx`)
+      kind: Rule
+      services:
+        - name: nginx-traefik
+          kind: Service
+

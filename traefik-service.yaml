@@ -1,0 +1,27 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: TraefikService
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/instance: nginx-hello-world
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: nginx-hello-world
+  name: nginx-traefik
+  namespace: nginx-hello-world
+spec:
+        #externalIPs:
+        #  - 192.168.68.10
+        #externalTrafficPolicy: Cluster
+  ports:
+  - name: nginx
+    port: 8000
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/instance: nginx-hello-world
+    app.kubernetes.io/name: nginx-hello-world
+  sessionAffinity: None
+  type: ClusterIP
+status: {}
+        #  loadBalancer: {}
+

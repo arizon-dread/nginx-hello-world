@@ -6,7 +6,7 @@ metadata:
     k8s-app: nginx
   name: nginx-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       k8s-app: nginx
@@ -17,13 +17,14 @@ spec:
       labels:
         k8s-app: nginx
     spec:
+      serviceAccountName: nginx
       containers:
-      - image: minimolnet/arizon-nginx-hello-world:latest
-        imagePullPolicy: Never
+      - image: arizon/nginx-arm:latest
+        imagePullPolicy: IfNotPresent
         name: nginx
         resources: {}
         ports:
-          - containerPort: 1180
+          - containerPort: 8080
         volumeMounts:
           - name: nginx-conf
             mountPath: /etc/nginx/

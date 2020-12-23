@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: minimolnet
+    http:
+      paths:
+      - path: /nginx
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: nginx
+            port: 
+              name: http
